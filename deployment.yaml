@@ -11,6 +11,9 @@ spec:
     metadata:
       labels:
         app: nodejs-test
+      annotations:
+        admission.datadoghq.com/enabled: "true"
+        admission.datadoghq.com/js-lib.version: v5.73.0
     spec:
       containers:
       - name: nodejs-test
@@ -24,6 +27,8 @@ spec:
           value: "nodejs-test-app"
         - name: DD_ENV
           value: "dev"
+        - name: DD_LOGS_INJECTION
+          value: "true"
 ---
 apiVersion: v1
 kind: Service
