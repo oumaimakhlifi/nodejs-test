@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodejs-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodejs-test
+  template:
+    metadata:
+      labels:
+        app: nodejs-test
+    spec:
+      containers:
+      - name: nodejs-test
+        image: <TON_DOCKERHUB_USERNAME>/nodejs-test:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DD_AGENT_HOST
+          value: "datadog-agent.datadog.svc.cluster.local"
+        - name: DD_SERVICE
+          value: "nodejs-test-app"
+        - name: DD_ENV
+          value: "dev"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodejs-test
+spec:
+  selector:
+    app: nodejs-test
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+  type: LoadBalancer
