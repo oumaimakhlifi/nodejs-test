@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
       - name: nodejs-test
-        image: <TON_DOCKERHUB_USERNAME>/nodejs-test:latest
+        image: oumaimakhelifi/nodejs-test:latest
         ports:
         - containerPort: 3000
         env:
